@@ -63,28 +63,11 @@ param_type <- function() {
 #' @param step A number specifying the increment step of the number input,
 #'   defaults to 1.
 #'
+#' @includeRmd man/roxygen/text.Rmd
+#'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### Default text input
-#'
-#' textInput(id = "text")
-#'
-#' ### Default number input
-#'
-#' numberInput(id = "num1")
-#'
-#' ### Specify `min`, `max`, and `step`
-#'
-#' numberInput(
-#'   id = "num2",
-#'   min = 1,
-#'   max = 10,
-#'   step = 2
-#' )
-#'
-textInput <- function(id, value = NULL, placeholder = NULL, ...,
+textInput <- function(..., id, value = NULL, placeholder = NULL,
                       type = "text") {
   assert_id()
   assert_possible(type, possible_types)
@@ -109,7 +92,7 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
 
 #' @rdname textInput
 #' @export
-numberInput <- function(id, value = NULL, placeholder = NULL, ..., min = NULL,
+numberInput <- function(..., id, value = NULL, placeholder = NULL, min = NULL,
                         max = NULL, step = 1) {
   assert_id()
 
@@ -153,7 +136,7 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
 
 #' @rdname textInput
 #' @export
-groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
+groupTextInput <- function(..., id, value = NULL, placeholder = NULL,
                            type = "text", left = NULL, right = NULL) {
   assert_id()
   assert_possible(type, possible_types)

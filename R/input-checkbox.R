@@ -39,42 +39,10 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @includeRmd man/roxygen/checkbox.Rmd
+#'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### One option
-#'
-#' checkboxInput(
-#'   id = "checkbox1",
-#'   choices = "Choice 1",
-#'   selected = "Choice 1"
-#' )
-#'
-#' ### Multiple options
-#'
-#' checkboxInput(
-#'   id = "checkbox2",
-#'   choices = c("Choice 1", "Choice 2")
-#' )
-#'
-#' ### Inline checkbox
-#'
-#' checkboxInput(
-#'   id = "checkbox3",
-#'   choices = c("Choice 1", "Choice 2", "Choice 3"),
-#'   inline = TRUE
-#' )
-#'
-#' ### Switches
-#'
-#' switchInput(
-#'   id = "switch1",
-#'   .style %>% background("success"),
-#'   choices = paste("Switch choice", 1:3),
-#'   selected = "Switch choice 3"
-#' )
-#'
 checkboxInput <- function(..., id, choices = NULL, values = choices,
                           selected = NULL, inline = FALSE) {
   assert_id()
@@ -218,128 +186,6 @@ map_checkboxes <- function(choices, values, selected, inline,
             tags$div(class = "invalid-feedback")
           )
         }
-      )
-    }
-  )
-}
-
-#' Checkbar input
-#'
-#' A stylized checkbox input. The checkbar input appears similar to a group of
-#' buttons, but with a checked or highlighted state.
-#'
-#' @inheritParams checkboxInput
-#'
-#' @param choices A character vector or list of tag element specifying the
-#'   input's choices, defaults to `NULL`.
-#'
-#' @param values A vector of values specifying the values of the input's
-#'   choices, defaults to `choices`.
-#'
-#' @param selected One or more of `values` specifying the input's default
-#'   selected values, defaults to `NULL`.
-#'
-#' @family inputs
-#' @export
-#' @examples
-#'
-#' ### Default checkbar
-#'
-#' checkbarInput(
-#'   id = "cb1",
-#'   choices = c("When", "Why", "Where")
-#' )
-#'
-#' ### Modifying background color
-#'
-#' checkbarInput(
-#'   id = "cb2",
-#'   choices = c("What", "Which")
-#' ) %>%
-#'   background("info")
-#'
-#' ### Labeling a checkbar
-#'
-#' formGroup(
-#'   label = "Toppings",
-#'   checkbarInput(
-#'     id = "fixins",
-#'     choices = c(
-#'       "Sprinkles",
-#'       "Nuts",
-#'       "Fudge"
-#'     )
-#'   )
-#' )
-#'
-checkbarInput <- function(..., id, choices = NULL, values = choices,
-                          selected = NULL) {
-  assert_id()
-  assert_choices()
-
-  tag <- dep_attach({
-    checkboxes <- map_checkbuttons(choices, values, selected)
-
-    tags$div(
-      class = "yonder-checkbar btn-group btn-group-toggle d-flex",
-      id = id,
-      `data-toggle` = "buttons",
-      checkboxes,
-      ...
-    )
-  })
-
-  s3_class_add(tag, c("yonder_checkbar", "yonder_input"))
-}
-
-#' @rdname checkbarInput
-#' @export
-updateCheckbarInput <- function(id, choices = NULL, values = choices,
-                                selected = NULL, enable = NULL, disable = NULL,
-                                session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_choices()
-  assert_session()
-
-  checkboxes <- map_checkbuttons(choices, values, selected)
-
-  content <- coerce_content(checkboxes)
-  selected <- coerce_selected(selected)
-  enable <- coerce_enable(enable)
-  disable <- coerce_disable(disable)
-
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable
-  ))
-}
-
-map_checkbuttons <- function(choices, values, selected) {
-  if (is.null(choices) && is.null(values)) {
-    return(NULL)
-  }
-
-  selected <- values %in% selected
-
-  Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      tags$label(
-        class = str_collate(
-          "btn",
-          if (select) "active"
-        ),
-        tags$input(
-          type = "checkbox",
-          autocomplete = "off",
-          value = value,
-          checked = if (select) NA
-        ),
-        choice
       )
     }
   )

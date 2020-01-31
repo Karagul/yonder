@@ -38,65 +38,10 @@
 #'   `choices` and `values`. Use `"fixed"` and sort `choices` to keep selected
 #'   chips in the same sorted order.
 #'
-#' @section **Example** simple application:
-#'
-#' ```R
-#' ui <- container(
-#'   chipInput(
-#'     .style %>% width(50),
-#'     id = "chips",
-#'     choices = paste("Option number", 1:10),
-#'     values = 1:10,
-#'     inline = TRUE
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
-#'
-#' @section **Example** inline chips:
-#'
-#' ```R
-#' ui <- container(
-#'   chipInput(
-#'     .style %>%
-#'       width(50) %>%
-#'       background("primary"),
-#'     id = "chips",
-#'     choices = c(
-#'       "A rather long option, isn't it?",
-#'       "Shorter",
-#'       "A middle-size option",
-#'       "One more"
-#'     ),
-#'     values = 1:4,
-#'     fill = FALSE
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
+#' @includeRmd man/roxygen/chip.Rmd
 #'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### Default input
-#'
-#' chipInput(
-#'   id = "chip1",
-#'   choices = paste("Choice", 1:5),
-#'   selected = c("Choice 3", "Choice 4")
-#' )
-#'
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
                       ..., placeholder = NULL, max = Inf, inline = TRUE,
                       sort = "stack") {

@@ -24,20 +24,10 @@
 #' The sophistication of this input will improve as browsers adopt the latest
 #' HTML standards.
 #'
+#' @includeRmd man/roxygen/range.Rmd
+#'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### Range inputs
-#'
-#' # Select from a range of numeric values.
-#'
-#' rangeInput(id = "range1")
-#'
-#' ### Custom step
-#'
-#' rangeInput(id = "range2", step = 10)
-#'
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
   assert_id()
 

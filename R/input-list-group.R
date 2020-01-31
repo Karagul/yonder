@@ -24,89 +24,10 @@
 #'   group border is useful when rendering a list group inside a custom parent
 #'   container, e.g. inside a [card()].
 #'
-#' @section Navigation with a list group:
-#'
-#' A list group can also control a set of panes. Be sure to set `multiple =
-#' FALSE`. This layout is reminiscent of a table of contents.
-#'
-#' ```R
-#' ui <- container(
-#'   columns(
-#'     column(
-#'       width = 3,
-#'       listGroupInput(
-#'         id = "nav",
-#'         selected = "pane1",
-#'         choices = c(
-#'           "Item 1",
-#'           "Item 2",
-#'           "Item 3"
-#'         ),
-#'         values = c(
-#'           "pane1",
-#'           "pane2",
-#'           "pane3"
-#'         )
-#'       )
-#'     ),
-#'     column(
-#'       navContent(
-#'         navPane(
-#'           id = "pane1",
-#'           p("Pellentesque tristique imperdiet tortor.")
-#'         ),
-#'         navPane(
-#'           id = "pane2",
-#'           p("Sed bibendum. Donec pretium posuere tellus.")
-#'         ),
-#'         navPane(
-#'           id = "pane3",
-#'           p("Pellentesque tristique imperdiet tortor.")
-#'         )
-#'       )
-#'     )
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$nav, {
-#'     showPane(input$nav)
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
+#' @includeRmd man/roxygen/list-group.Rmd
 #'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### An actionable list group
-#'
-#' listGroupInput(
-#'   id = "list1",
-#'   choices = paste("Item", 1:5)
-#' )
-#'
-#' ### List group within a card
-#'
-#' card(
-#'   header = h6("Pick an item"),
-#'   listGroupInput(
-#'     id = "list2",
-#'     flush = TRUE,
-#'     choices = paste("Item", 1:5),
-#'   )
-#' )
-#'
-#' ### Horizontal list group
-#'
-#' listGroupInput(
-#'   id = "list3",
-#'   choices = paste("Item", 1:4),
-#'   layout = "horizontal"
-#' )
-#'
 listGroupInput <- function(..., id, choices = NULL, values = choices,
                            selected = NULL, layout = "vertical",
                            flush = FALSE) {
@@ -124,6 +45,8 @@ listGroupInput <- function(..., id, choices = NULL, values = choices,
 
     items <- map_listitems(choices, values, selected)
 
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_list_group"))
+
     tag <- div(
       class = str_collate(
         "yonder-list-group",
@@ -133,7 +56,7 @@ listGroupInput <- function(..., id, choices = NULL, values = choices,
       ),
       id = id,
       items,
-      ...
+      !!!args
     )
 
     s3_class_add(tag, c("yonder_list_group", "yonder_input"))

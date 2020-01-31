@@ -25,99 +25,12 @@
 #' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
 #'   appearance of the nav input, defaults to `"links"`.
 #'
-#' @section Including a menu:
-#'
-#' Use the reactive id of any nav menus to know when a menu item is clicked.
-#'
-#' ```R
-#' ui <- navInput(
-#'   id = "navigation",
-#'   choices = list(
-#'     "Item 1",
-#'     "Item 2",
-#'     menuInput(
-#'       id = "navMenu",  # <-
-#'       label = "Item 3",
-#'       choices = c("Choice 1", "Choice 2")
-#'     )
-#'   ),
-#'   values = c("item1", "item2", "item3")
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$navMenu, {
-#'     cat(paste("Click menu item:", input$navMenu, "\n"))
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
+#' @includeRmd man/roxygen/nav.Rmd
 #'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### Nav styled as tabs
-#'
-#' navInput(
-#'   id = "tabs1",
-#'   choices = c(
-#'     "Tab 1",
-#'     "Tab 2",
-#'     "Tab 3"
-#'   ),
-#'   selected = "Tab 1",
-#'   appearance = "tabs"
-#' )
-#'
-#' ### Nav styled as pills
-#'
-#' navInput(
-#'   id = "tabs2",
-#'   choices = paste("Tab", 1:3),
-#'   selected = "Tab 1",
-#'   appearance = "pills"
-#' )
-#'
-#' ### Nav with dropdown
-#'
-#' navInput(
-#'   id = "tabs3",
-#'   choices = list(
-#'     "Tab 1",
-#'     menuInput(
-#'       id = "menu1",
-#'       label = "Tab 2",
-#'       choices = c(
-#'         "Action",
-#'         "Another action"
-#'       )
-#'     ),
-#'     "Tab 2"
-#'   ),
-#'   values = c("tab1", "tab2", "tab3")
-#' )
-#'
-#' ### Full width nav input
-#'
-#' navInput(
-#'   id = "tabs4",
-#'   choices = paste("Tab", 1:5),
-#'   values = paste0("tab", 1:5),
-#'   appearance = "pills",
-#'   fill = TRUE
-#' )
-#'
-#' ### Centering a nav input
-#'
-#' navInput(
-#'   id = "tabs5",
-#'   choices = paste("Tab", 1:3)
-#' ) %>%
-#'   flex(justify = "center")
-#'
-navInput <- function(id, choices = NULL, values = choices,
-                     selected = values[[1]], ..., appearance = "links",
+navInput <- function(..., id, choices = NULL, values = choices,
+                     selected = values[[1]], appearance = "links",
                      fill = FALSE) {
   assert_id()
   assert_selected(len = 1)
